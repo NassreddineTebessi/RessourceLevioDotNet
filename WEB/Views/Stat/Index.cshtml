@@ -1,0 +1,496 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+@section Css
+{
+<link rel="stylesheet" href=@Url.Content("/Content/css/datatables/jquery.dataTables.min.css")>
+}
+<div class="row flex-row">
+    <div class="col-xl-4 col-md-4 col-sm-4">
+        <div class="widget widget-12 has-shadow">
+            <div class="widget-body">
+                <div class="media">
+                    <div class="align-self-center ml-5 mr-5">
+                        <i class="ion-person text-green"></i>
+                    </div>
+                    <div class="media-body align-self-center">
+                        <div class="title">Resources in mandates</div>
+                        <div class="number">@ViewBag.numresmandates</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-4 col-md-4 col-sm-4">
+        <div class="widget widget-12 has-shadow">
+            <div class="widget-body">
+                <div class="media">
+                    <div class="align-self-center ml-5 mr-5">
+                        <i class="ion-person text-red"></i>
+                    </div>
+                    <div class="media-body align-self-center">
+                        <div class="title">Unoccupied Resources</div>
+                        <div class="number">@ViewBag.getnumempintermand</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-4 col-md-4 col-sm-4">
+        <div class="widget widget-12 has-shadow">
+            <div class="widget-body">
+                <div class="media">
+                    <div class="align-self-center ml-5 mr-5">
+                        <i class="ion-person text-linkedin"></i>
+                    </div>
+                    <div class="media-body align-self-center">
+                        <div class="title">Admin Agents</div>
+                        <div class="number">@ViewBag.getnumempadmin</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row flex-row">
+    <div class="col-xl-6 col-md-6 col-sm-6">
+        <div class="widget widget-12 has-shadow">
+            <div class="widget-body">
+                <div class="media">
+                    <div class="align-self-center ml-5 mr-5">
+                        <i class="ion-person text-warning"></i>
+                    </div>
+                    <div class="media-body align-self-center">
+                        <div class="title">Number of freelancers</div>
+                        <div class="number">@ViewBag.numfreelancers</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-6 col-md-6 col-sm-6">
+        <div class="widget widget-12 has-shadow">
+            <div class="widget-body">
+                <div class="media">
+                    <div class="align-self-center ml-5 mr-5">
+                        <i class="ion-person text-info"></i>
+                    </div>
+                    <div class="media-body align-self-center">
+                        <div class="title">Number of emloyees</div>
+                        <div class="number">@ViewBag.numemployees</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col col-xl-6 col-md-6 col-sm-6">
+    <div class="widget widget-01 has-shadow">
+        <div class="widget-body no-padding">
+            <h3>Satisfaction Rate</h3>
+            <div class="circle">
+                <div class="percent">@ViewBag.satisfactionrate<i>%</i></div>
+            </div>
+            <div class="other-stats">
+                <div class="row no-margin justify-content-center">
+                    <div class="col-6 col-xl-6 col-md-6 col-sm-6">
+                        <div class="today-sales">
+                            <div class="text">
+                                <div class="heading">Satisfactions</div>
+                                <div class="number">@ViewBag.satisfactions <i class="ion-thumbsup text-green"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-xl-6 col-md-6 col-sm-6">
+                        <div class="today-sales">
+                            <div class="text">
+                                <div class="heading">Complaints</div>
+                                <div class="number">@ViewBag.reclamations <i class="ion-thumbsdown text-red"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="col col-xl-6">
+        <div class="widget has-shadow">
+            <div class="widget-header bordered no-actions d-flex align-items-center">
+                <h4>Most Possessed Skills</h4>
+            </div>
+            <div class="widget-body">
+                <div class="chart">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+<div class="col-xl-6">
+    <div class="widget has-shadow">
+        <div class="widget-header bordered no-actions d-flex align-items-center">
+            <h4>Most Profitable Projects</h4>
+        </div>
+        <div class="widget-body">
+            <div class="chart">
+                <canvas id="vertical-chart-01"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="col-xl-6">
+        <div class="widget has-shadow">
+            <div class="widget-header bordered no-actions d-flex align-items-center">
+                <h4>Most Profitable Projects</h4>
+            </div>
+            <div class="widget-body">
+                <div class="chart">
+                    <canvas id="vertical-chart-02"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-12">
+        <div class="widget has-shadow">
+            <div class="widget-header bordered no-actions d-flex align-items-center">
+                <h4>Sorting</h4>
+            </div>
+            <div class="widget-body">
+                <div class="table-responsive">
+                    <table id="resourcesSort" class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Contract type</th>
+                                <th>Email</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resourcesTable">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+<div class="row">
+    <div class="col-xl-12">
+        <div class="widget has-shadow">
+            <div class="widget-header bordered no-actions d-flex align-items-center">
+                <h4>Sorting</h4>
+            </div>
+            <div class="widget-body">
+                <div class="table-responsive">
+                    <table id="projectsSort" class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Project Status</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Client</th>
+                                <th>Project Efficiency</th>
+                            </tr>
+                        </thead>
+                        <tbody id="projectsTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="success-modal" class="modal fade">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Profile</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">close</span>
+                </button>
+            </div>
+                <div class="widget widget-13 has-shadow">
+                    <div class="spinner" id="spinner"></div>
+                    <div class="widget-body p-0" id="showProfile">
+                        <div class="author-avatar">
+                            <img src=@Url.Content("/Content/img/avatar/avatar-04.jpg") id="profilePic" alt="profilePic" class="img-fluid rounded-circle">
+                        </div>
+                        <div class="author-name">
+                            <div  id="firstAndLastName"></div>
+                            <span id="typeResource"></span>
+                        </div>
+                        <div class="follow-btn text-center mt-4">
+                            <button class="btn btn-shadow" id="generateReport"><i class="la la-newspaper-o" style="font-size:2.4rem;"></i>Generate Report</button>
+                        </div>
+                        <div class="social-stats mt-5">
+                            <div class="row d-flex justify-content-between">
+                                <div class="col-6 text-center">
+                                    <i class="la la-check-square"></i>
+                                    <div class="counter">Availability</div>
+                                    <div class="heading" id="available"></div>
+                                </div>
+                                <div class="col-6 text-center">
+                                    <i class="la la-rocket"></i>
+                                    <div class="counter">Efficiency</div>
+                                    <div class="heading"><span id="efficiency">0</span> %</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="shape-container">
+                            <svg class="wavy" viewbox="00 0 85 25">
+                                <path fill="#e4e8f0" d="M0 30 V15 Q30 3 60 15 V30z" />
+                                <path fill="#5d5386" d="M0 30 V5 Q30 20 55 12 T100 11 V30z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <input type="text" hidden value="@ViewBag.skills" id="skills" />
+        <input type="text" hidden value="@ViewBag.mostProfitProject" id="mostProfitProject" />
+        <input type="text" hidden value="@ViewBag.mostprofitclient" id="mostprofitclient" />
+        <input type="text" hidden value="@ViewBag.satisfactionrate" id="satisfactionrate" />
+        <input type="text" hidden value="@ViewBag.resources" id="resources" />
+        <input type="text" hidden value="@ViewBag.projects" id="projects" />
+        @section chartjs
+{
+            <script src=@Url.Content("/Content/vendors/js/components/widgets/widgets.min.js")></script>
+            <script src=@Url.Content("/Content/vendors/js/numberAnimation/jquery.animateNumber.min.js")></script>
+            <script src=@Url.Content("/Content/vendors/js/noty/noty.min.js")></script>
+            <script src=@Url.Content("/Content/vendors/js/datatables/jquery.dataTables.min.js")></script>
+            <script>
+                var id;
+                var firstname;
+                var lastname;
+                var resources = JSON.parse(document.getElementById('resources').value);
+                for (var i = 0; i < resources.length; i++) {
+                    if (resources[i]["role"] != "ROLE_ADMIN_AGENT") {
+                        $("#resourcesTable").append('<tr>'+
+                                '<td><span class="text-primary">' + resources[i]["id"]+ '</span></td>' +
+                                '<td>' + resources[i]["first_name"] + '</td>' +
+                                '<td>' + resources[i]["last_name"] + '</td>'+
+                                '<td>' + resources[i]["contract_type"] + '</td>' +
+                                '<td>' + resources[i]["email"] + '</td>' +
+                                '<td class="td-actions">'+
+                                    '<button type="button" class="btn btn-success viewProfile" data-toggle="modal" data-target="#success-modal" data-value="' + resources[i]["id"] + '">View Profile</button>' +
+                                '</td>'+
+                           ' </tr>');
+                    }
+                }
+                var projects = JSON.parse(document.getElementById('projects').value);
+                for (var i = 0; i < projects.length; i++) {
+                        $("#projectsTable").append('<tr>' +
+                                '<td><span class="text-primary">' + projects[i]["id"] + '</span></td>' +
+                                '<td>' + projects[i]["name"] + '</td>' +
+                                '<td>' + projects[i]["type"] + '</td>' +
+                                '<td>' + projects[i]["start_date"] + '</td>' +
+                                '<td>' + projects[i]["end_date"] + '</td>' +
+                                '<td>' + projects[i]["client"]["name"] + '</td>' +
+                                '<td class="td-actions">' +
+                                    '<button type="button" class="btn btn-success calculEff" data-value="' + projects[i]["id"] + '">Calculate</button><p id="result' + projects[i]["id"] +'"></p>' +
+                                '</td>' +
+                           ' </tr>');
+                }
+                var items = JSON.parse(document.getElementById('skills').value);
+                var labels = [];
+                var values = [];
+                for (var i = 0; i < items.length; i++) {
+                    labels.push(items[i][0]);
+                    values.push(items[i][1]);
+                }
+                var ctx = document.getElementById("myChart");
+                var myChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: values,
+                            backgroundColor: ['#3366CCCC', '#DC3912CC', '#FF9900CC', '#109618CC', '#990099CC', '#3B3EACCC', '#0099C6CC', '#DD4477CC', '#66AA00CC', '#B82E2ECC', '#316395CC', '#994499CC', '#22AA99CC', '#AAAA11CC', '#6633CCCC', '#E67300CC', '#8B0707CC', '#329262CC', '#5574A6CC', '#3B3EACCC'],
+                            hoverBackgroundColor: ['#3366CC', '#DC3912', '#FF9900', '#109618', '#990099', '#3B3EAC', '#0099C6', '#DD4477', '#66AA00', '#B82E2E', '#316395', '#994499', '#22AA99', '#AAAA11', '#6633CC', '#E67300', '#8B0707', '#329262', '#5574A6', '#3B3EAC'],
+                            borderWidth: 1
+                        }]
+                    }
+                });
+                var items2 = JSON.parse(document.getElementById('mostProfitProject').value);
+                var labels2 = [];
+                var values2 = [];
+                for (var i = 0; i < items2.length; i++) {
+                    labels2.push(items2[i][0]);
+                    values2.push(items2[i][1]);
+                }
+                var ctx2 = document.getElementById("vertical-chart-01");
+                var myChart = new Chart(ctx2, {
+                    type: 'bar',
+                    data: {
+                        labels: labels2,
+                        datasets: [{
+                            label: "Profit($)",
+                            data: values2,
+                            backgroundColor: ['#3366CCCC', '#3366CCCC', '#3366CCCC', '#3366CCCC', '#3366CCCC', '#3366CCCC', '#3366CCCC', '#3366CCCC', '#3366CCCC', '#3366CCCC', '#3366CCCC'],
+                            hoverBackgroundColor: ['#3366CC', '#3366CC', '#3366CC', '#3366CC', '#3366CC', '#3366CC', '#3366CC', '#3366CC', '#3366CC', '#3366CC', '#3366CC', '#3366CC'],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+
+                });
+                var items3 = JSON.parse(document.getElementById('mostprofitclient').value);
+                var labels3 = [];
+                var values3 = [];
+                for (var i = 0; i < items3.length; i++) {
+                    labels3.push(items3[i][0]);
+                    values3.push(items3[i][1]);
+                }
+                var ctx3 = document.getElementById("vertical-chart-02");
+                var myChart = new Chart(ctx3, {
+                    type: 'horizontalBar',
+                    data: {
+                        labels: labels3,
+                        datasets: [{
+                            label: "# Resources",
+                            data: values3,
+                            backgroundColor: ['#DC3912CC', '#DC3912CC', '#DC3912CC', '#DC3912CC', '#DC3912CC', '#DC3912CC', '#DC3912CC', '#DC3912CC', '#DC3912CC', '#DC3912CC', '#DC3912CC'],
+                            hoverBackgroundColor: ['#DC3912', '#DC3912', '#DC3912', '#DC3912', '#DC3912', '#DC3912', '#DC3912', '#DC3912', '#DC3912', '#DC3912', '#DC3912', '#DC3912'],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+
+                });
+                $('.circle').circleProgress({
+                    value: document.getElementById('satisfactionrate').value / 100,
+                    size: 150,
+                    startAngle: -Math.PI / 2,
+                    thickness: 14,
+                    lineCap: "round",
+                    emptyFill: "#f0eff4",
+                    fill: { gradient: ["#4ac5f8", "#0681c4"] }
+                }).on("circle-animation-progress", function (f, e) { $(".percent").html(Math.round(document.getElementById('satisfactionrate').value * e) + "<i>%</i>") });
+
+                $(".viewProfile").click(function () {
+                    id=$(this).attr("data-value");
+                    $("#spinner").show();
+                    $("#showProfile").hide();
+                    $.ajax({
+                        type: 'GET',
+                        url: 'http://localhost:20664/Stat/getResourceById?resourceId=' + id,
+                        dataType: 'json',
+                        success: function (d) {
+                            firstname = d.first_name;
+                            lastname = d.last_name;
+                            console.log(d.first_name);
+                            $("#profilePic").attr("src",d.photo);
+                            $("#firstAndLastName").html(d.first_name + " " + d.last_name);
+                            $("#typeResource").html(d.contract_type);
+                            if (d.state === "available") {
+                                $("#available").html("Available");
+                                $("#available").css('color', '#60c400');
+                            }
+                           else if (d.state === "notAvailable") {
+                                $("#available").html("Not Available");
+                                $("#available").css('color', '#fe195e');
+                            }
+                           else if (d.state === "soonAvailable") {
+                                $("#available").html("Soon Available");
+                                $("#available").css('color', '#f7b733');
+                           }
+                            $.ajax({
+                                type: 'GET',
+                                url: 'http://localhost:20664/Stat/getResourceEff?resourceId=' + id,
+                                dataType: 'json',
+                                success: function (d) {
+                                    console.log(d);
+                                    var eff = Math.round(d);
+                                    $("#spinner").hide();
+                                    $("#showProfile").show();
+                                    $('#efficiency').animateNumber({ number: eff });
+                                }
+                            });
+
+                        }
+                    });
+                });
+                $(".calculEff").click(function () {
+                    var button = $(this);
+                    var projId = $(this).attr("data-value");
+                    $.ajax({
+                        type: 'GET',
+                        url: 'http://localhost:20664/Stat/getProjectEff?projectId=' + projId,
+                        dataType: 'json',
+                        success: function (d) {
+                            if(d==="NaN"){
+                                $("#result" + projId).html(d);
+                            }
+                            else {
+                                $("#result" + projId).html(Math.round(d) + "%");
+                                if((Math.round(d)>=100)){
+                                    $("#result" + projId).addClass("text-green");   
+                                }
+                                else {
+                                    $("#result" + projId).addClass("text-red");
+                                }
+                            }
+                            button.hide();
+                            console.log(d);
+                        }
+                    });
+                });
+                $("#generateReport").click(function () {
+                    $.ajax({
+                        type: 'GET',
+                        url: 'http://localhost:20664/Stat/getReport?resourceId=' + id,
+                        success: function (d) {
+                            console.log(d);
+                            new Noty({
+                                type: 'success',
+                                layout: 'center',
+                                timeout: 2000,
+                                progressBar: true,
+                                animation: {
+                                    open:null
+                                },
+                                text: 'Report generated successfully'
+                            }).show();
+                        }
+                    });
+                });
+                $(document).ready(function () {
+                    $('#resourcesSort').DataTable();
+                    $('#projectsSort').DataTable();
+                });
+            </script>
+        }
+
+

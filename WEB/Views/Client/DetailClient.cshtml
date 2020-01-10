@@ -1,0 +1,50 @@
+﻿@model WEB.Models.ClientModel
+
+@{
+    ViewBag.Title = "DetailClient";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h2>DetailClient</h2>
+
+
+                <!-- Start Head Profile -->
+                <div class="widget head-profile has-shadow">
+                    <div class="widget-body pb-0">
+                        <div class="row d-flex align-items-center">
+                            
+                            <div class="col-xl-4 col-md-4 d-flex justify-content-center">
+                                
+                                <div class="infos justify-content-center">
+                                    <h2 >@ViewBag.result.name</h2>
+                                    <br />
+                                    <div class="location">@ViewBag.result.adress</div>
+                                    <div class="location">@ViewBag.result.type</div>
+                                    <div class="location">@ViewBag.result.category</div>
+                                    <br />
+                                    <a class="btn btn-gradient-01" href="@Url.Action("ProjectsByClient","Client",new {id = @ViewBag.result.id })">Projects</a>
+                                    <br /><br /><br /><br /></div>
+                            </div><br /><br />
+                            <script src='https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js'></script>
+                            <link href='https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet' />
+                            <div id='map' style='width: 1050px; height: 400px;'></div>
+                            <script>
+                            mapboxgl.accessToken = 'pk.eyJ1IjoibWFuYWkiLCJhIjoiY2pveXg3OWhoMmZ5aTNxcGE0MXdwbmkybSJ9.CrtONZs6ZMSOPDk98yQNfw';
+                            var map = new mapboxgl.Map({
+                            container: 'map',
+                            style: 'mapbox://styles/mapbox/streets-v10',
+                            zoom: 10,
+                            center: [@ViewBag.result.longitude.ToString().Replace(",","."), @ViewBag.result.latitude.ToString().Replace(",", ".")]
+                            });
+                            var marker = new mapboxgl.Marker()
+                            .setLngLat([@ViewBag.result.longitude.ToString().Replace(",", "."), @ViewBag.result.latitude.ToString().Replace(",", ".")])
+                            .addTo(map);
+                            </script>
+
+                            
+</div>
+                        
+                    </div>
+                </div>
+                <!-- End Head Profile -->
+                   

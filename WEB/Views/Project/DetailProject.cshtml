@@ -1,0 +1,39 @@
+﻿@model WEB.Models.ProjectModel
+
+@{
+    ViewBag.Title = "DetailClient";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h2>DetailProject</h2>
+
+<!-- Start Head Profile -->
+<div class="widget head-profile has-shadow">
+    <div class="widget-body pb-0">
+        <div class="row d-flex align-items-center">
+
+            <div class="col-xl-4 col-md-4 d-flex justify-content-center">
+
+                <div class="infos justify-content-center">
+                    <h2>@ViewBag.result.name</h2>
+                    <br />
+                    <div class="location">@ViewBag.result.adress</div>
+                    <div class="location">@ViewBag.result.type</div>
+                    <div class="location">@ViewBag.result.start_date</div>
+                    <div class="location">@ViewBag.result.end_date</div>
+                    <div class="location">@ViewBag.result.num_ressource_all</div>
+                    <div class="location">@ViewBag.result.num_ressource_levio</div>
+                    <br />
+                    <img src=@Url.Content("/Content/ProjectImages/"+@ViewBag.result.photo)>
+                    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+                    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+                    
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<!-- End Head Profile -->
+

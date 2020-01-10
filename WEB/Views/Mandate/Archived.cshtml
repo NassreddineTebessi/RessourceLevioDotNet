@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "Archived";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h2>Archived</h2>
+
+
+@section Css
+{
+    <link rel="stylesheet" href=@Url.Content("/Content/css/datatables/datatables.min.css")>
+}
+
+<div class="widget has-shadow">
+    <div class="widget-header bordered no-actions d-flex align-items-center">
+        <h4>List mandate</h4>
+    </div>
+    <div class="widget-body">
+        <div class="table-responsive">
+            <table id="export-table" class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>Start date</th>
+                        <th>End date</th>
+                        <th>Costs</th>
+                        <th>Resource Name</th>
+                        <th><span style="width:100px;">Projet Name</span></th>
+ 
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in ViewBag.result)
+                    {
+                        <tr>
+                            <td data-sort="@p.StartDate.ToShortDateString().ToString()">@p.StartDate.ToShortDateString().ToString()</td>
+                            <td data-sort="@p.EndDate.ToShortDateString().ToString()">@p.EndDate.ToShortDateString().ToString()</td>
+                            <td>@p.Montant</td>
+                            <td><span class="text-primary">@p.ressource.first_name @p.ressource.last_name</span></td>
+                            <td><span style="width:100px;"><span class="badge-text badge-text-small info">@p.project.name</span></span></td>
+ 
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section JavaScript
+{
+  
+    <!-- Begin Page Vendor Js -->
+    <script src=@Url.Content("/Content/vendors/js/datatables/datatables.min.js")></script>
+    <script src=@Url.Content("/Content/vendors/js/datatables/dataTables.buttons.min.js")></script>
+    <script src=@Url.Content("/Content/vendors/js/datatables/jszip.min.js")></script>
+    <script src=@Url.Content("/Content/vendors/js/datatables/buttons.html5.min.js")></script>
+    <script src=@Url.Content("/Content/vendors/js/datatables/pdfmake.min.js")></script>
+    <script src=@Url.Content("/Content/vendors/js/datatables/vfs_fonts.js")></script>
+    <script src=@Url.Content("/Content/vendors/js/datatables/buttons.print.min.js")></script>
+    <script src=@Url.Content("/Content/vendors/js/nicescroll/nicescroll.min.js")></script>
+    <script src=@Url.Content("/Content/js/datetime-moment.js")></script>
+    <script src=@Url.Content("/Content/js/date-eu.js")></script>
+
+    <!-- End Page Vendor Js -->
+    <!-- Begin Page Snippets -->
+    <script src=@Url.Content("/Content/vendors/js/app/app.min.js")></script>
+    <script src=@Url.Content("/Content/js/components/tables/tables.js")></script>
+    <!-- End Page Snippets -->
+
+}

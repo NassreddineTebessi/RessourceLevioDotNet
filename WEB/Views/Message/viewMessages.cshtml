@@ -1,0 +1,330 @@
+﻿@model HashSet<WEB.Models.MessageViewModel>
+
+@{
+    ViewBag.Title = "Send New Message";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+@section Css
+{
+    <link rel="stylesheet" href="../../Content/vendors/css/base/bootstrap.min.css">
+    <link rel="stylesheet" href="../../Content/vendors/css/base/elisyam-1.5.min.css">
+    <link rel="stylesheet" href="../../Content/css/photoswipe/photoswipe.min.css">
+    <link rel="stylesheet" href="../../Content/css/photoswipe/default-skin/default-skin.min.css">
+    <link href="~/Content/css/sweetalert2.min.css" rel="stylesheet" />
+    <link href="~/Content/vendors/css/base/elisyam-1.5.min.css" rel="stylesheet" />
+    <link href="~/Content/css/animate/animate.min.css" rel="stylesheet" />
+
+    <style>
+        .ismail {
+            margin-right: 200px;
+            margin-bottom: 200px;
+        }
+    </style>
+
+}
+<!-- End Preloader -->
+<div class="row">
+    <div class="page-header">
+        <div class="d-flex align-items-center">
+            <h2 class="page-header-title">Messenger</h2>
+            <div>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="db-default.html"><i class="ti ti-home"></i></a></li>
+                    <li class="breadcrumb-item"><a href="#">Chat</a></li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="row flex-row">
+    <div class="col-lg-12">
+        <div class="page mail">
+
+            <!-- Begin Widget -->
+            <div class="row widget mb-0">
+                <!-- Begin Messages List -->
+                <div class="col-xl-4 col-md-4 no-padding" id="sidebar">
+                    <div class="sidebar-content w-100 h-100">
+                        <!-- Begin List Group -->
+                        <div id="list-group">
+                            <ul class="messages-list list-group w-100 list-scroll auto-scroll">
+                                @{
+                                    int conversationId = Model.First().conversationId;
+                                }
+
+                                @foreach (var m in Model)
+                                {
+                                    if (m.conversationId != conversationId)
+                                    {
+                                        <div class="media-body ">
+                                            <hr style="border: solid">
+                                        </div>
+                                        <li class="list-group-item">
+                                            <a data-toggle="tab" href="#mail-@m.messageId">
+                                                <div class="media">
+                                                    <div class="media-left align-self-center">
+                                                        <img src="../../Content/img/avatar/avatar-02.jpg" class="user-img rounded-circle" alt="...">
+                                                    </div>
+                                                    <div class="media-body align-self-center">
+                                                        <div class="username">
+                                                            @if (m.fromUser != 2)
+                                                            {
+                                                                <h4>Received from : @m.fromFirstName @m.fromLastName<i class="la la-paperclip"></i></h4>
+                                                            }
+                                                            else
+                                                            {
+                                                                <h4>Sent to : @m.toFirstName @m.toLastName<i class="la la-paperclip"></i></h4>
+
+                                                            }
+                                                        </div>
+                                                        <div class="msg">
+                                                            <h5>Subject : @m.subject</h5>
+                                                        </div>
+                                                    </div>
+                                                    <div class="media-right align-self-center">
+                                                        <span class="date-send">@m.messageDate</span>
+                                                        <span class="badge-rounded info mx-auto"></span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+
+                                    }
+                                    else
+                                    {
+                                        <li class="list-group-item">
+                                            <a data-toggle="tab" href="#mail-@m.messageId">
+                                                <div class="media">
+                                                    <div class="media-left align-self-center">
+                                                        <img src="../../Content/img/avatar/avatar-02.jpg" class="user-img rounded-circle" alt="...">
+                                                    </div>
+                                                    <div class="media-body align-self-center">
+                                                        <div class="username">
+                                                            @if (m.fromUser != 2)
+                                                            {
+                                                                <h4>Received from : @m.fromFirstName @m.fromLastName<i class="la la-paperclip"></i></h4>
+                                                            }
+                                                            else
+                                                            {
+                                                                <h4>Sent to : @m.toFirstName @m.toLastName<i class="la la-paperclip"></i></h4>
+
+                                                            }
+                                                        </div>
+                                                        <div class="msg">
+                                                            <h5>Subject : @m.subject</h5>
+                                                        </div>
+                                                    </div>
+                                                    <div class="media-right align-self-center">
+                                                        <span class="date-send">@m.messageDate</span>
+                                                        <span class="badge-rounded info mx-auto"></span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    }
+                                    conversationId = m.conversationId;
+                                }
+                            </ul>
+                        </div>
+                        <!-- End List Group -->
+                    </div>
+                </div>
+                <!-- End Messages List -->
+                <!-- Begin Messages -->
+
+                <div class="col-xl-8 col-md-8 bg-mail d-flex no-padding">
+                    <!-- Begin Card -->
+                    <div class="card w-100 has-shadow">
+                        <!-- Begin Tab -->
+                        <div class="tab-content">
+                            @foreach (var m in Model)
+                            {
+
+                                                                      <!-- Begin Tab 1 (Show) -->
+                                <input type="hidden" class="msgInfo" data-from="@m.fromUser" data-to="@m.toUser" />
+
+                                    <div class="tab-pane fade mail-scroll auto-scroll" id="mail-@m.messageId">
+                                        <!-- Begin Card Header -->
+                                        <div class="card-header">
+                                            <div class="row">
+                                                <div class="col-xl-10 col-sm-12 no-padding">
+                                                    <div class="message-avatar">
+                                                        <a href="pages-profile.html">
+                                                            <img src="../../Content/img/avatar/avatar-02.jpg" class="rounded-circle" style="width: 50px;" alt="...">
+                                                        </a>
+                                                    </div>
+                                                    <div class="message-infos">
+                                                        <div class="user-title">@m.fromFirstName @m.fromLastName</div>
+
+                                                        <div class="show-details">
+                                                            <a data-toggle="collapse" href="#details-01" aria-expanded="false" aria-controls="details-01">Details</a>
+                                                            <div class="collapse" id="details-01">
+                                                                <ul>
+                                                                    <li>From: @m.fromEmail</li>
+                                                                    <li>To: @m.toEmail</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-2 col-sm-12 no-padding d-flex justify-content-end">
+                                                    <ul class="list-inline pt-3">
+                                                        <li class="list-inline-item mr-3">
+                                                            <a href="javascript:void(0)">
+                                                                <i class="la la-print la-2x"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li class="list-inline-item mr-3">
+                                                            <a href="@Url.Action("deleteMessage", "Message", new {id = @m.messageId})">
+                                                                <i class="la la-trash la-2x"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Card Header -->
+                                        <!-- Begin Card Body -->
+                                        <div class="card-body d-flex flex-column">
+                                            <div class="mail-title">
+                                                <h2>@m.subject</h2>
+                                            </div>
+                                            <p>@m.messageBody</p>
+                                        </div>
+                                        <!-- End Card Body -->
+                                        <!-- Begin Publisher -->
+                                        <div class="publisher publisher-multi bg-white">
+                                            <textarea class="publisher-input" rows="4" placeholder="Your message"></textarea>
+                                            <div class="publisher-bottom d-flex justify-content-end">
+                                                <a class="publisher-btn" href="#"><i class="la la-smile-o"></i></a>
+                                                <a class="publisher-btn" href="#"><i class="la la-paperclip"></i></a>
+                                                <button class="btn btn-gradient-01" data-from="@m.fromUser" data-from-email="@m.fromEmail" data-to="@m.toUser" data-to-email="@m.toEmail" data-conv="@m.conversationId" data-subject="@m.subject">Reply</button>
+                                            </div>
+                                        </div>
+                                        <!-- End Publisher -->
+                                    </div>
+                                
+                            }
+                            <!-- End Tab 1 -->
+                            <!-- Begin Tab 2 -->
+                        </div>
+
+                        <!-- End Tab -->
+                    </div>
+                    <!-- End Card -->
+                </div>
+
+                <!-- End Messages -->
+            </div>
+            <!-- End Widget -->
+        </div>
+        <!-- End Col -->
+    </div>
+    <!-- End Row -->
+</div>
+
+@section JavaScript
+{
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="../../Content/vendors/js/base/core.min.js"></script>
+    <script src="../../Content/vendors/js/nicescroll/nicescroll.min.js"></script>
+    <script src="../../Content/vendors/js/photoswipe/photoswipe.min.js"></script>
+    <script src="../../Content/vendors/js/photoswipe/photoswipe-ui-default.min.js"></script>
+    <script src="../../Content/vendors/js/app/app.min.js"></script>
+    <script src="../../Content/js/app/mail/mail.min.js"></script>
+    <script src="../../Content/js/app/mail/mail.js"></script>
+    <script src="../../Content/vendors/js/noty/noty.min.js"></script>
+    <script src="../../Content/vendors/js/nicescroll/nicescroll.min.js"></script>
+    <script src="../../Content/vendors/js/base/core.min.js"></script>
+    <script src="../../Content/vendors/js/base/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+    <script src="~/Content/vendors/js/html2canvas.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.tab-pane.fade.mail-scroll.auto-scroll').first()
+                .attr("class", "tab-pane fade mail-scroll auto-scroll active show");
+            $('.row.flex-row').first()
+            $('.btn.btn-gradient-01').on('click',
+                function () {
+                    var message = $(this).parent().parent().children('.publisher-input').val();
+                    var substitute = null;
+                    var from = $(this).attr('data-from');
+                    var to = $(this).attr('data-to');
+                    var fromEmail = $(this).attr('data-from-email');
+                    var toEmail = $(this).attr('data-to-email');
+                    var substitute2 = null;
+
+                    if (from != 2) {
+                        substitute2 = fromEmail;
+                        fromEmail = toEmail;
+                        substitute = from;
+                    } else {
+                        substitute2 = toEmail;
+                        substitute = to;
+                    }
+                    var subject = $(this).attr('data-subject');
+                    var conversationId = $(this).attr('data-conv');
+                    $.ajax({
+                        url: '@Url.Action("sendSmtpMessage","Message")',
+                        type: "post",
+                        data: "from=" + fromEmail + "&to=" + substitute2 + "&subject=" + subject + "&msg=" + message,
+                        cache: false,
+                        success: function (event) {
+                            swalWithBootstrapButtons(
+                                'Sent!',
+                                'Email has been sent! ',
+                                'success'
+                            );
+                        }
+                    });
+                    $.ajax({
+                        type: 'post',
+                        url: '@Url.Action("sendMessage", "Message")',
+                        data: "from=" + 2 + "&to=" + substitute + "&conversationId=" + conversationId + "&subject=" + subject + "&msgBody="+message,
+                        cache: false,
+                        success: function(e) {
+                            new Noty({
+                                type: 'notification',
+                                layout: 'centerRight',
+                                text: 'Email Has Been Sent Successfully!',
+                                closeWith: ['click', 'button'],
+                                animation: {
+                                    open: 'animated bounceInRight', // Animate.css class names
+                                    close: 'animated bounceOutRight' // Animate.css class names
+                                }
+                            }).show();
+
+                            for (var i = 0; i <= 90000; i += 2) {
+                                i -= 1;
+                            }
+                            window.location.reload();
+                        }
+                });
+                });
+
+            function print() {
+                var filename = 'conversation.pdf';
+
+                html2canvas(document.querySelector('.tab-content')).then(canvas => {
+                    var pdf = new jsPDF('p', 'mm', 'a1');
+                    pdf.addImage(canvas.toDataURL('image/jpg'), 'jpg', 0, 0, 500, 650);
+                    pdf.save(filename);
+                });
+            }
+
+            $('.la.la-print.la-2x').on('click',
+                function() {
+                    print();
+                });
+
+        });
+    </script>
+}

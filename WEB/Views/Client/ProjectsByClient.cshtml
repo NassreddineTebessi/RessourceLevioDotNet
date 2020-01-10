@@ -1,0 +1,71 @@
+﻿@model IEnumerable<WEB.Models.ClientModel>
+
+@{
+    ViewBag.Title = "ListClients";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+
+
+<!-- End Left Sidebar -->
+<!-- Begin Content -->
+<div class="content-inner compact">
+
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-xl-11">
+                <!-- Start Head Profile -->
+                <!-- End Head Profile -->
+                <div class="row flex-row">
+                    @{ foreach (var c in ViewBag.result)
+                        {
+                            <div class="col-xl-3 col-md-4 col-sm-6 col-remove">
+                                <!-- Begin Card -->
+                                <div class="widget-image has-shadow">
+                                    <div class="contact-card-2">
+                                        <div class="cover-bg">
+                                            <img src=@Url.Content("/Content/img/cover/01.jpg") class="img-fluid" alt="...">
+                                        </div>
+                                        <!-- Begin Widget Body -->
+                                        <div class="widget-body">
+                                            <div class="quick-actions hover">
+                                                <div class="dropdown">
+                                                    <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
+                                                        <i class="la la-ellipsis-h"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+
+                                                        <a href="@Url.Action("deleteClient","Client",new {id=c.id })">
+                                                            <i class="la la-trash"></i>Delete
+                                                        </a>
+                                                        <a href="@Url.Action("EditClient","Client",new {id=c.id })" class="dropdown-item">
+                                                            <i class="la la-edit"></i>Edit
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="cover-image mx-auto">
+                                                <img src=@Url.Content("/Content/img/avatar/avatar-02.jpg") alt="..." class="rounded-circle mx-auto">
+                                            </div>
+                                            <h4 class="name"><a href="#">@c.name</a></h4>
+
+                                            <div class="text-center pt-5 pb-3">
+                                                <a href="@Url.Action("DetailClient","Client",new {id=c.id })" class="btn btn-gradient-01">Details</a>
+                                            </div>
+                                        </div>
+                                        <!-- End Widget Body -->
+                                    </div>
+                                </div>
+                                <!-- End Card -->
+                            </div>
+                        }
+                    }
+
+                    <!-- End Row -->
+                </div>
+                <!-- End Col -->
+            </div>
+            <!-- End Row -->
+        </div>
+    </div>
+</div>
